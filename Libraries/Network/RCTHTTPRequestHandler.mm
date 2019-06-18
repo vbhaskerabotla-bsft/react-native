@@ -170,5 +170,15 @@ didReceiveResponse:(NSURLResponse *)response
   }
   [delegate URLRequest:task didCompleteWithError:error];
 }
-
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+willPerformHTTPRedirection:(NSHTTPURLResponse *)redirectResponse
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest *))completionHandler
+{
+  NSMutableURLRequest *newRequest = [task.currentRequest mutableCopy];
+  [newRequest setURL:request.URL];
+  
+  completionHandler(newRequest);
+}
 @end
